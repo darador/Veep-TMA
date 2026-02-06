@@ -1,0 +1,29 @@
+--- STDOUT ---
+{"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2024-11-05","capabilities":{"experimental":{},"prompts":{"listChanged":false},"resources":{"subscribe":false,"listChanged":false},"tools":{"listChanged":true},"tasks":{"list":{},"cancel":{},"requests":{"tools":{"call":{}},"prompts":{"get":{}},"resources":{"read":{}}}}},"serverInfo":{"name":"notebooklm","version":"2.14.5"},"instructions":"NotebookLM MCP - Access NotebookLM (notebooklm.google.com).\n\n**Auth:** If you get authentication errors, run `notebooklm-mcp-auth` via your Bash/terminal tool. This is the automated authentication method that handles everything. Only use save_auth_tokens as a fallback if the CLI fails.\n**Confirmation:** Tools with confirm param require user approval before setting confirm=True.\n**Studio:** After creating audio/video/infographic/slides, poll studio_status for completion."}}
+{"jsonrpc":"2.0","id":2,"result":{"resources":[]}}
+
+--- STDERR ---
+
+
++-----------------------------------------------------------------------------+
+|                                                                             |
+|                                                                             |
+|                        \u2584\u2580\u2580 \u2584\u2580\u2588 \u2588\u2580\u2580 \u2580\u2588\u2580 \u2588\u2580\u2584\u2580\u2588 \u2588\u2580\u2580 \u2588\u2580\u2588                        |
+|                        \u2588\u2580  \u2588\u2580\u2588 \u2584\u2584\u2588  \u2588  \u2588 \u2580 \u2588 \u2588\u2584\u2584 \u2588\u2580\u2580                        |
+|                                                                             |
+|                                                                             |
+|                               FastMCP 2.14.5                                |
+|                            https://gofastmcp.com                            |
+|                                                                             |
+|                    \U0001f5a5  Server:      notebooklm                               |
+|                    \U0001f680 Deploy free: https://fastmcp.cloud                    |
+|                                                                             |
++-----------------------------------------------------------------------------+
++-----------------------------------------------------------------------------+
+|                          \u2728 FastMCP 3.0 is coming!                          |
+|      Pin `fastmcp < 3` in production, then upgrade when you're ready.       |
++-----------------------------------------------------------------------------+
+
+
+[02/04/26 15:41:28] INFO     Starting MCP server 'notebooklm'    server.py:2506
+                             with transport 'stdio'                            
