@@ -21,7 +21,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Trash2, UserCog, User, Pencil, AlertTriangle } from "lucide-react"
+import { Trash2, UserCog, User, Pencil, AlertTriangle, KeyRound } from "lucide-react"
+import { resetUserPassword } from "@/app/actions/admin"
 
 type UserItem = {
     id: string
@@ -46,6 +47,11 @@ export function UserList() {
 
     // Delete State
     const [deletingId, setDeletingId] = useState<string | null>(null)
+
+    // Password Reset State
+    const [resetUser, setResetUser] = useState<UserItem | null>(null)
+    const [newPassword, setNewPassword] = useState("")
+    const [isResetOpen, setIsResetOpen] = useState(false)
 
     const fetchUsers = async () => {
         setLoading(true)
@@ -128,6 +134,30 @@ export function UserList() {
         } else {
             alert("Error eliminando usuario")
             console.error(error)
+        }
+    }
+
+    const openReset = (user: UserItem) => {
+        setResetUser(user)
+        setNewPassword("")
+        setIsResetOpen(true)
+    }
+
+    const handleResetPassword = async () => {
+        if (!resetUser || !newPassword) return
+        if (newPassword.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres")
+            return
+        }
+
+        try {
+            await resetUserPassword(resetUser.id, newPassword)
+            alert("Contraseña actualizada correctamente")
+            setIsResetOpen(false)
+            setResetUser(null)
+        } catch (error: any) {
+            console.error(error)
+            alert("Error: " + error.message)
         }
     }
 
@@ -232,6 +262,15 @@ export function UserList() {
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
+                                                    title="Cambiar Contraseña"
+                                                    onClick={() => openReset(user)}
+                                                    className="text-amber-600 hover:text-amber-700 hover:bg-amber-50"
+                                                >
+                                                    <KeyRound className="w-4 h-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
                                                     className="text-destructive hover:bg-destructive/10"
                                                     onClick={() => confirmDelete(user.id)}
                                                 >
@@ -311,6 +350,39 @@ export function UserList() {
                     <DialogFooter>
                         <Button variant="ghost" onClick={() => setDeletingId(null)}>Cancelar</Button>
                         <Button variant="destructive" onClick={handleDelete}>Eliminar</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Password Reset Dialog */}
+            <Dialog open={isResetOpen} onOpenChange={setIsResetOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <KeyRound className="w-5 h-5 text-amber-600" />
+                            Cambiar Contraseña
+                        </DialogTitle>
+                        <DialogDescription>
+                            Establece una nueva contraseña para <b>{resetUser?.full_name}</b>.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Nueva Contraseña</label>
+                            <Input
+                                type="text"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                placeholder="Mínimo 6 caracteres"
+                            />
+                            <p className="text-[10px] text-muted-foreground">
+                                Escribe la nueva clave. El usuario deberá usar está para ingresar.
+                            </p>
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="ghost" onClick={() => setIsResetOpen(false)}>Cancelar</Button>
+                        <Button onClick={handleResetPassword}>Actualizar Clave</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
