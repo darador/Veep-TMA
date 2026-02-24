@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { PlusCircle, ClipboardList, Clock, AlertCircle } from "lucide-react"
+import { Input } from "@/components/ui/input"
 
 import { Header } from "@/components/layout/Header"
 
@@ -15,6 +16,7 @@ export default function TechnicianPage() {
     const [pendingAudits, setPendingAudits] = useState<any[]>([])
     const [userName, setUserName] = useState<string>("")
     const [loading, setLoading] = useState(true)
+    const [monthFilter, setMonthFilter] = useState("")
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -58,6 +60,12 @@ export default function TechnicianPage() {
         fetchHistory()
     }, [])
 
+    const filteredInspections = inspections.filter(insp => {
+        if (!monthFilter) return true;
+        // monthFilter format is usually "YYYY-MM"
+        return insp.created_at.startsWith(monthFilter);
+    });
+
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
             <Header
@@ -70,17 +78,7 @@ export default function TechnicianPage() {
                         className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
                     />
                 }
-            >
-                <div className="ml-0 sm:ml-24 md:ml-40 z-10 relative">
-                    <Link href="/technician/inspections/new">
-                        <Button className="gap-2 shadow-lg bg-primary hover:bg-primary/90 text-white">
-                            <PlusCircle className="w-4 h-4" />
-                            <span className="hidden sm:inline">Agregar Reporte</span>
-                            <span className="sm:hidden">Agregar</span>
-                        </Button>
-                    </Link>
-                </div>
-            </Header>
+            />
 
             <main className="container max-w-4xl mx-auto p-6 space-y-8">
 
@@ -106,40 +104,62 @@ export default function TechnicianPage() {
                     </div>
                 )}
 
-                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-                    <Card>
+                <div className="grid gap-6 md:grid-cols-2">
+                    <Card className="bg-gradient-to-br from-blue-50 to-white dark:from-blue-950/20 dark:to-zinc-950 border-blue-100 dark:border-blue-900 shadow-sm">
                         <CardHeader className="pb-2">
-                            <CardTitle className="text-lg font-medium">Total reportes</CardTitle>
+                            <CardTitle className="text-xl font-semibold text-blue-900 dark:text-blue-100">
+                                ¿Querés agregar un nuevo reporte de tus EPP?
+                            </CardTitle>
+                            <CardDescription className="text-blue-700/80 dark:text-blue-300">
+                                Registra proactivamente el estado de tus elementos de protección personal.
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">{loading ? "..." : inspections.length}</div>
-                            <p className="text-xs text-muted-foreground mt-1">Histórico</p>
+                            <Link href="/technician/inspections/new">
+                                <Button className="gap-2 w-full sm:w-auto shadow-md bg-primary hover:bg-primary/90 text-white mt-2">
+                                    <PlusCircle className="w-4 h-4" />
+                                    Agregar Reporte
+                                </Button>
+                            </Link>
                         </CardContent>
                     </Card>
                 </div>
 
                 <Card>
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <ClipboardList className="w-5 h-5" />
-                            Historial Reciente
-                        </CardTitle>
-                        <CardDescription>Tus últimos reportes enviados</CardDescription>
+                    <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div>
+                            <CardTitle className="flex items-center gap-2 text-xl">
+                                <ClipboardList className="w-5 h-5" />
+                                Historial
+                                <span className="ml-2 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                                    {inspections.length} total
+                                </span>
+                            </CardTitle>
+                            <CardDescription>Tus últimos reportes enviados</CardDescription>
+                        </div>
+                        <div className="w-full sm:w-auto">
+                            <Input
+                                type="month"
+                                value={monthFilter}
+                                onChange={(e) => setMonthFilter(e.target.value)}
+                                className="w-full sm:w-[200px]"
+                            />
+                        </div>
                     </CardHeader>
                     <CardContent>
                         {loading ? (
                             <div className="text-sm text-muted-foreground">Cargando...</div>
-                        ) : inspections.length === 0 ? (
+                        ) : filteredInspections.length === 0 ? (
                             <div className="text-center py-8 text-muted-foreground bg-muted/20 rounded-lg">
-                                No hay inspecciones registradas.
+                                No hay reportes registrados para este período.
                                 <br />
                                 <Link href="/technician/inspections/new" className="text-primary hover:underline">
-                                    ¡Inicia la primera!
+                                    ¡Inicia uno nuevo!
                                 </Link>
                             </div>
                         ) : (
                             <div className="space-y-4">
-                                {inspections.map((insp) => (
+                                {filteredInspections.map((insp) => (
                                     <div key={insp.id} className="flex justify-between items-center p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                                         <div>
                                             <div className="font-medium">
