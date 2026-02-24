@@ -22,7 +22,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Trash2, UserCog, User, Pencil, AlertTriangle, KeyRound } from "lucide-react"
-import { resetUserPassword } from "@/app/actions/admin"
+import { resetUserPassword, createUser } from "@/app/actions/admin"
 import { toast } from "sonner"
 
 type UserItem = {
@@ -74,20 +74,16 @@ export function UserList() {
     const handleAdd = async () => {
         if (!email || !fullName) return
 
-        const { error } = await supabase
-            .from('users')
-            .insert([
-                { email, full_name: fullName, role }
-            ])
+        const result = await createUser(email, fullName, role)
 
-        if (!error) {
+        if (result.success) {
             setEmail("")
             setFullName("")
             fetchUsers()
             toast.success("Usuario creado exitosamente")
         } else {
-            console.error("Error creating user:", error)
-            toast.error("Error al crear usuario. ¿El email ya existe?")
+            console.error("Error creating user:", result.error)
+            toast.error("Error al crear usuario: " + result.error)
         }
     }
 
