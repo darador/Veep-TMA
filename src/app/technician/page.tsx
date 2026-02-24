@@ -92,15 +92,15 @@ export default function TechnicianPage() {
                                 <AlertCircle className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-orange-800 dark:text-orange-200">¡Auditoría Requerida!</h3>
+                                <h3 className="font-bold text-orange-800 dark:text-orange-200">¡Reporte Requerido!</h3>
                                 <p className="text-sm text-orange-700 dark:text-orange-300">
-                                    Tu supervisor ha solicitado {pendingAudits.length} revisión(es).
+                                    Tu líder ha solicitado {pendingAudits.length} revisión(es).
                                 </p>
                             </div>
                         </div>
                         <Link href={`/technician/inspections/new?inspectionId=${pendingAudits[0].id}`}>
                             <Button variant="default" className="bg-orange-600 hover:bg-orange-700 text-white border-none w-full sm:w-auto">
-                                Realizar Auditoría
+                                Realizar reporte
                             </Button>
                         </Link>
                     </div>
