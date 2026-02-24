@@ -182,45 +182,42 @@ function InspectionFormContent() {
     if (loading) return <div className="p-8 text-center">Cargando catálogo...</div>
 
     return (
-        <div className="p-4 max-w-2xl mx-auto space-y-6 pb-20">
-            <div className="flex items-center gap-4">
-                <Button variant="ghost" onClick={() => router.back()}>
-                    <ArrowLeft className="w-4 h-4" />
+        <div className="p-4 sm:p-6 max-w-2xl mx-auto space-y-6 pb-24">
+            <div className="flex items-center gap-4 bg-movistar text-white p-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 rounded-b-3xl shadow-md mb-4 bg-cover bg-center" style={{ backgroundImage: "url('/comprometidos.png')", backgroundBlendMode: 'soft-light' }}>
+                <Button variant="ghost" onClick={() => router.back()} className="text-white hover:bg-white/20 hover:text-white rounded-full w-10 h-10 p-0">
+                    <ArrowLeft className="w-5 h-5" />
                 </Button>
                 <div>
-                    <h1 className="text-2xl font-bold">
-                        {inspectionId ? "Completar Auditoría" : "Nueva Inspección"}
+                    <h1 className="text-2xl font-bold tracking-tight shadow-black/10 drop-shadow-sm">
+                        {inspectionId ? "Completar Auditoría" : "Nuevo reporte"}
                     </h1>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white/90 font-medium">
                         {inspectionId ? "Solicitada por Supervisor" : "Revisión de Equipos"}
                     </p>
                 </div>
             </div>
 
             {Object.entries(groupedEpps).map(([category, items]) => (
-                <Card key={category}>
-                    <CardHeader className="py-4 bg-muted/20">
-                        <CardTitle className="text-base">{category}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="divide-y">
+                <Card key={category} className="overflow-hidden border-none shadow-md">
+                    {category !== 'General' && (
+                        <CardHeader className="py-3 bg-zinc-100 dark:bg-zinc-900 border-b">
+                            <CardTitle className="text-[15px] font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">{category}</CardTitle>
+                        </CardHeader>
+                    )}
+                    <CardContent className="divide-y p-0">
                         {items.map(item => (
                             <div key={item.id} className="py-4 flex flex-col gap-4">
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="font-medium">{item.name}</span>
-                                        {item.is_critical && (
-                                            <span className="text-[10px] px-2 py-0.5 bg-red-100 text-red-600 rounded-full font-bold uppercase tracking-wider">
-                                                Crítico
-                                            </span>
-                                        )}
+                                        <span className="font-semibold text-zinc-800 dark:text-zinc-200 text-lg">{item.name}</span>
                                     </div>
 
-                                    <div className="flex bg-muted p-1 rounded-lg self-start sm:self-auto overflow-x-auto max-w-full">
+                                    <div className="flex w-full sm:w-auto gap-2 self-start sm:self-auto overflow-x-auto pb-2 sm:pb-0 snap-x">
                                         <button
                                             onClick={() => handleStatusChange(item.id, 'ok')}
-                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all shrink-0 ${formData[item.id]?.status === 'ok'
-                                                ? 'bg-white text-green-700 shadow-sm'
-                                                : 'text-muted-foreground hover:text-foreground'
+                                            className={`flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none snap-center ${formData[item.id]?.status === 'ok'
+                                                ? 'bg-movistar-green text-white shadow-md scale-[1.02] ring-2 ring-movistar-green/20'
+                                                : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
                                                 }`}
                                         >
                                             <CheckCircle2 className="w-4 h-4" />
@@ -228,9 +225,9 @@ function InspectionFormContent() {
                                         </button>
                                         <button
                                             onClick={() => handleStatusChange(item.id, 'needs_replacement')}
-                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all shrink-0 ${formData[item.id]?.status === 'needs_replacement'
-                                                ? 'bg-white text-yellow-700 shadow-sm'
-                                                : 'text-muted-foreground hover:text-foreground'
+                                            className={`flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none snap-center ${formData[item.id]?.status === 'needs_replacement'
+                                                ? 'bg-amber-500 text-white shadow-md scale-[1.02] ring-2 ring-amber-500/20'
+                                                : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
                                                 }`}
                                         >
                                             <AlertTriangle className="w-4 h-4" />
@@ -238,9 +235,9 @@ function InspectionFormContent() {
                                         </button>
                                         <button
                                             onClick={() => handleStatusChange(item.id, 'missing')}
-                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all shrink-0 ${formData[item.id]?.status === 'missing'
-                                                ? 'bg-white text-red-700 shadow-sm'
-                                                : 'text-muted-foreground hover:text-foreground'
+                                            className={`flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none snap-center ${formData[item.id]?.status === 'missing'
+                                                ? 'bg-red-500 text-white shadow-md scale-[1.02] ring-2 ring-red-500/20'
+                                                : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
                                                 }`}
                                         >
                                             <XCircle className="w-4 h-4" />
@@ -326,7 +323,7 @@ function InspectionFormContent() {
                         className="w-full h-12 text-lg shadow-lg"
                         disabled={submitting}
                     >
-                        {submitting ? "Enviando..." : "Finalizar Inspección"}
+                        {submitting ? "Enviando..." : "Finalizar Reporte"}
                     </Button>
                 </div>
             </div>
