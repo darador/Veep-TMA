@@ -127,41 +127,42 @@ export default function KPIDashboard({ data }: DashboardProps) {
 
             {/* KPI Summary Cards */}
             <div className="grid gap-4 md:grid-cols-4">
-                <Card>
+                <Card className="bg-movistar text-white shadow-lg border-none">
                     <CardHeader className="py-2">
-                        <CardTitle className="text-sm">Total EPPs Revisados</CardTitle>
+                        <CardTitle className="text-sm font-medium opacity-90">Total EPPs Revisados</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{totalItems}</div>
+                        <div className="text-3xl font-extrabold">{totalItems}</div>
                     </CardContent>
                 </Card>
-                <Card>
-                    <CardHeader className="py-2">
-                        <CardTitle className="text-sm">Tasa de Conformidad</CardTitle>
+                <Card className="bg-movistar text-white shadow-lg border-none relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-2 h-full bg-movistar-green"></div>
+                    <CardHeader className="py-2 pl-6">
+                        <CardTitle className="text-sm font-medium opacity-90">Tasa de Conformidad</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold text-green-600">
+                    <CardContent className="pl-6">
+                        <div className="text-3xl font-extrabold">
                             {totalItems > 0 ? ((okItems / totalItems) * 100).toFixed(1) : 0}%
                         </div>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-white shadow-lg border-2 border-red-100">
                     <CardHeader className="py-2">
-                        <CardTitle className="text-sm">Elementos Faltantes</CardTitle>
+                        <CardTitle className="text-sm font-medium text-slate-500">Elementos Faltantes</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-red-600">{missingItems}</div>
+                        <div className="text-3xl font-extrabold text-red-500">{missingItems}</div>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-white shadow-lg border-2 border-yellow-100">
                     <CardHeader className="py-2">
-                        <CardTitle className="text-sm">Requieren Recambio</CardTitle>
+                        <CardTitle className="text-sm font-medium text-slate-500">Requieren Recambio</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-yellow-600">{issuesItems}</div>
+                        <div className="text-3xl font-extrabold text-yellow-500">{issuesItems}</div>
                     </CardContent>
                 </Card>
             </div>
-        </div >
+        </div>
     )
 }
