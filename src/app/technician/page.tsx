@@ -16,7 +16,10 @@ export default function TechnicianPage() {
     const [pendingAudits, setPendingAudits] = useState<any[]>([])
     const [userName, setUserName] = useState<string>("")
     const [loading, setLoading] = useState(true)
-    const [monthFilter, setMonthFilter] = useState("")
+    const [monthFilter, setMonthFilter] = useState<string>(() => {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    })
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -137,7 +140,8 @@ export default function TechnicianPage() {
                             </CardTitle>
                             <CardDescription>Tus últimos reportes enviados</CardDescription>
                         </div>
-                        <div className="w-full sm:w-auto">
+                        <div className="w-full sm:w-auto flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                            <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">Mes:</span>
                             <Input
                                 type="month"
                                 value={monthFilter}

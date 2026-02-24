@@ -183,15 +183,21 @@ function InspectionFormContent() {
 
     return (
         <div className="p-4 sm:p-6 max-w-2xl mx-auto space-y-6 pb-24">
-            <div className="flex items-center gap-4 bg-movistar text-white p-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 rounded-b-3xl shadow-md mb-4 bg-cover bg-center" style={{ backgroundImage: "url('/comprometidos.png')" }}>
-                <Button variant="ghost" onClick={() => router.back()} className="text-white hover:bg-white/20 hover:text-white rounded-full w-10 h-10 p-0">
+            <div className="relative flex items-center gap-4 bg-movistar text-white p-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 rounded-b-3xl shadow-md mb-4 overflow-hidden">
+                {/* Background image */}
+                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/comprometidos.png')" }}></div>
+
+                {/* Dark Overlay for text legibility */}
+                <div className="absolute inset-0 bg-black/40"></div>
+
+                <Button variant="ghost" onClick={() => router.back()} className="text-white hover:bg-white/20 hover:text-white rounded-full w-10 h-10 p-0 relative z-10 transition-colors">
                     <ArrowLeft className="w-5 h-5" />
                 </Button>
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight shadow-black/10 drop-shadow-sm">
+                <div className="relative z-10">
+                    <h1 className="text-2xl font-bold tracking-tight drop-shadow-md">
                         {inspectionId ? "Completar Reporte" : "Nuevo reporte"}
                     </h1>
-                    <p className="text-sm text-white/90 font-medium">
+                    <p className="text-sm text-white/90 font-medium drop-shadow-sm">
                         {inspectionId ? "Solicitado por tu líder" : "Revisión de Equipos"}
                     </p>
                 </div>
