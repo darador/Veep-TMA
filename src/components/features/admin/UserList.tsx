@@ -155,13 +155,18 @@ export function UserList() {
         }
 
         try {
-            await resetUserPassword(resetUser.id, newPassword)
-            toast.success("Contraseña actualizada correctamente")
-            setIsResetOpen(false)
-            setResetUser(null)
+            const result = await resetUserPassword(resetUser.id, newPassword)
+
+            if (result.success) {
+                toast.success("Contraseña actualizada correctamente")
+                setIsResetOpen(false)
+                setResetUser(null)
+            } else {
+                toast.error("Error: " + result.error)
+            }
         } catch (error: any) {
             console.error(error)
-            toast.error("Error: " + error.message)
+            toast.error("Error inesperado al comunicarse con el servidor")
         }
     }
 
