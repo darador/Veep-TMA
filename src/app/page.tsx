@@ -6,7 +6,6 @@ import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { MovistarLogo } from "@/components/ui/movistar-logo"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -61,27 +60,18 @@ export default function LoginPage() {
         {/* Decorative subtle background elements */}
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none"></div>
 
-        <div className="flex flex-col items-center text-center z-10 w-full max-w-lg">
-          {/* Logo white version */}
-          <div className="mb-8">
-            <div className="bg-white rounded-full p-4 shadow-lg inline-block">
-              <MovistarLogo className="h-16 w-16 text-movistar fill-movistar" />
-            </div>
-          </div>
-
-          <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-sm">
-            SyH <span className="font-light">Movistar</span>
-          </h1>
-          <h2 className="text-xl lg:text-2xl font-medium opacity-90 mb-10">
-            Sistema de Gestión de EPP
+        <div className="flex flex-col items-center text-center z-10 w-full max-w-lg mt-10 lg:mt-0">
+          <h2 className="text-3xl lg:text-4xl font-semibold opacity-95 mb-8 drop-shadow-md">
+            Verificación de EPP
           </h2>
 
-          {/* Placeholder for 3D Character */}
-          <div className="w-full aspect-video md:aspect-square max-w-sm rounded-[2rem] border-4 border-dashed border-white/30 bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center p-6 shadow-inner transition-all hover:bg-white/10">
-            <span className="text-5xl mb-4">👷‍♀️</span>
-            <p className="text-white/80 font-medium text-center text-sm md:text-base">
-              [Espacio reservado para personaje 3D "Comprometidos con la Seguridad"]
-            </p>
+          {/* Character Image */}
+          <div className="w-full max-w-md flex flex-col items-center justify-center transition-all">
+            <img
+              src="/comprometidos.png"
+              alt="Comprometidos con la Seguridad"
+              className="w-full h-auto object-contain drop-shadow-2xl"
+            />
           </div>
         </div>
       </div>
@@ -113,7 +103,6 @@ export default function LoginPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="usuario@movistar.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
