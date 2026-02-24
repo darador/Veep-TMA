@@ -64,11 +64,12 @@ export default function TechnicianPage() {
                 title={userName ? `Hola, ${userName}` : "Cargando..."}
                 subtitle="Gestiona tus revisiones de EPP"
                 icon={
-                    <div className="absolute right-0 bottom-0 top-0 overflow-hidden w-1/3 flex justify-end pointer-events-none pr-4 md:pr-12">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 relative mr-2">
                         <img
                             src="/tecnico.png"
                             alt="Técnico"
-                            className="h-full object-contain object-bottom drop-shadow-xl translate-y-2 md:translate-y-4 max-h-[140px] md:max-h-[180px]"
+                            className="absolute bottom-0 w-full object-contain drop-shadow-md"
+                            style={{ height: '140%' }} // Make it slightly taller than its container but anchored to the bottom
                         />
                     </div>
                 }
