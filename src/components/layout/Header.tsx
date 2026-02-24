@@ -36,13 +36,15 @@ export function Header({ title, subtitle, children, icon }: HeaderProps) {
                 <div className="flex items-center gap-4 self-end md:self-auto">
                     {children}
                     <div className="flex items-center gap-4">
-                        <Link href="/profile" className="text-sm font-medium text-white/90 hover:text-white transition-colors">
-                            Mi Perfil
+                        <Link href="/profile">
+                            <Button variant="outline" size="sm" className="text-white border-white bg-transparent hover:bg-white hover:text-movistar transition-colors">
+                                Mi Perfil
+                            </Button>
                         </Link>
                         <Button
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
-                            className="text-white/90 hover:text-white hover:bg-white/10"
+                            className="text-white border-white bg-transparent hover:bg-white hover:text-movistar transition-colors"
                             onClick={handleLogout}
                         >
                             <LogOut className="w-4 h-4 mr-2" />

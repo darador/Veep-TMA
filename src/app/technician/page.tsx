@@ -63,15 +63,25 @@ export default function TechnicianPage() {
             <Header
                 title={userName ? `Hola, ${userName}` : "Cargando..."}
                 subtitle="Gestiona tus revisiones de EPP"
-                icon={<img src="/tecnico.png" alt="Técnico" className="w-12 h-12 object-contain" />}
+                icon={
+                    <div className="absolute top-0 left-0 w-32 h-32 md:w-48 md:h-48 pointer-events-none overflow-hidden hidden sm:block">
+                        <img
+                            src="/tecnico.png"
+                            alt="Técnico"
+                            className="w-full h-full object-cover object-top -ml-4 -mt-2"
+                        />
+                    </div>
+                }
             >
-                <Link href="/technician/inspections/new">
-                    <Button className="gap-2 shadow-lg bg-primary hover:bg-primary/90 text-white">
-                        <PlusCircle className="w-4 h-4" />
-                        <span className="hidden sm:inline">Agregar Reporte</span>
-                        <span className="sm:hidden">Agregar</span>
-                    </Button>
-                </Link>
+                <div className="ml-0 sm:ml-24 md:ml-40 z-10 relative">
+                    <Link href="/technician/inspections/new">
+                        <Button className="gap-2 shadow-lg bg-primary hover:bg-primary/90 text-white">
+                            <PlusCircle className="w-4 h-4" />
+                            <span className="hidden sm:inline">Agregar Reporte</span>
+                            <span className="sm:hidden">Agregar</span>
+                        </Button>
+                    </Link>
+                </div>
             </Header>
 
             <main className="container max-w-4xl mx-auto p-6 space-y-8">
