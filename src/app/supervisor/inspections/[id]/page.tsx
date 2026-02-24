@@ -145,6 +145,14 @@ export default function InspectionDetailPage() {
                                     )}
                                 </div>
 
+                                {/* Observations */}
+                                {item.notes && (
+                                    <div className="bg-muted/30 p-3 rounded-md text-sm text-slate-700 border border-muted/50 mt-4 mb-2">
+                                        <p className="font-medium text-xs text-slate-500 mb-1 uppercase tracking-wider">Observaciones</p>
+                                        <p className="whitespace-pre-wrap">{item.notes}</p>
+                                    </div>
+                                )}
+
                                 {/* Photo Evidence */}
                                 {item.photo_url ? (
                                     <div className="rounded-lg overflow-hidden border bg-black/5 relative group aspect-video">
