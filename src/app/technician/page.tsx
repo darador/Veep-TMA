@@ -13,12 +13,25 @@ export default function TechnicianPage() {
     const supabase = createClient()
     const [inspections, setInspections] = useState<any[]>([])
     const [pendingAudits, setPendingAudits] = useState<any[]>([])
+    const [userName, setUserName] = useState<string>("")
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchHistory = async () => {
             const { data: { user } } = await supabase.auth.getUser()
             if (!user) return
+
+            const { data: profile } = await supabase
+                .from('users')
+                .select('full_name')
+                .eq('id', user.id)
+                .single()
+
+            if (profile?.full_name) {
+                setUserName(profile.full_name)
+            } else {
+                setUserName(user.email?.split('@')[0] || "Técnico")
+            }
 
             // 1. Fetch COMPLETED history
             const { data, error } = await supabase
@@ -48,7 +61,7 @@ export default function TechnicianPage() {
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
             <Header
-                title="Dashboard Técnico"
+                title={userName ? `Hola, ${userName}` : "Cargando..."}
                 subtitle="Gestiona tus revisiones de EPP"
             >
                 <Link href="/technician/inspections/new">
@@ -107,7 +120,7 @@ export default function TechnicianPage() {
 
                     <Card>
                         <CardHeader className="pb-2">
-                            <CardTitle className="text-lg font-medium">Total Inspecciones</CardTitle>
+                            <CardTitle className="text-lg font-medium">Total verificaciones</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{loading ? "..." : inspections.length}</div>
