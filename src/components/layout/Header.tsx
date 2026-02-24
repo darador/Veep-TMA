@@ -22,28 +22,26 @@ export function Header({ title, subtitle, children }: HeaderProps) {
     }
 
     return (
-        <header className="border-b bg-white dark:bg-zinc-900/50 sticky top-0 z-10 backdrop-blur-sm">
+        <header className="bg-movistar sticky top-0 z-10 shadow-md">
             <div className="container max-w-7xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3 self-start md:self-auto">
-                    <div className="bg-primary/10 p-2 rounded-xl">
-                        <MovistarLogo className="w-8 h-8 text-primary fill-primary" />
-                    </div>
+                    <MovistarLogo className="w-10 h-10 text-white fill-white" />
                     <div>
-                        <h1 className="text-xl font-bold tracking-tight text-foreground">{title}</h1>
-                        {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+                        <h1 className="text-xl font-bold tracking-tight text-white">{title}</h1>
+                        {subtitle && <p className="text-xs text-white/80">{subtitle}</p>}
                     </div>
                 </div>
 
                 <div className="flex items-center gap-4 self-end md:self-auto">
                     {children}
                     <div className="flex items-center gap-4">
-                        <Link href="/profile" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                        <Link href="/profile" className="text-sm font-medium text-white/90 hover:text-white transition-colors">
                             Mi Perfil
                         </Link>
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="text-muted-foreground hover:text-destructive"
+                            className="text-white/90 hover:text-white hover:bg-white/10"
                             onClick={handleLogout}
                         >
                             <LogOut className="w-4 h-4 mr-2" />

@@ -53,7 +53,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-[#30ADFF]">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-movistar">
       {/* Left Column: Branding & Future 3D Asset */}
       <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16 text-white relative overflow-hidden">
 
