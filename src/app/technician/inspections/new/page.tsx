@@ -21,6 +21,7 @@ type InspectionData = {
     [key: string]: {
         status: InspectionItemStatus
         photo_url?: string
+        observation?: string
     }
 }
 
@@ -63,6 +64,13 @@ function InspectionFormContent() {
         setFormData(prev => ({
             ...prev,
             [id]: { ...prev[id], status }
+        }))
+    }
+
+    const handleObservationChange = (id: string, text: string) => {
+        setFormData(prev => ({
+            ...prev,
+            [id]: { ...prev[id], observation: text }
         }))
     }
 
@@ -143,7 +151,8 @@ function InspectionFormContent() {
                 inspection_id: finalInspectionId,
                 epp_id: epp.id,
                 status: formData[epp.id].status,
-                photo_url: formData[epp.id].photo_url || null
+                photo_url: formData[epp.id].photo_url || null,
+                observation: formData[epp.id].observation || null
             }))
 
             const { error: itemsError } = await supabase
@@ -195,8 +204,8 @@ function InspectionFormContent() {
                     </CardHeader>
                     <CardContent className="divide-y">
                         {items.map(item => (
-                            <div key={item.id} className="py-4 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                                <div className="flex flex-col gap-2">
+                            <div key={item.id} className="py-4 flex flex-col gap-4">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                     <div className="flex items-center gap-2">
                                         <span className="font-medium">{item.name}</span>
                                         {item.is_critical && (
@@ -206,31 +215,66 @@ function InspectionFormContent() {
                                         )}
                                     </div>
 
-                                    {/* Photo Preview & Control */}
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex bg-muted p-1 rounded-lg self-start sm:self-auto overflow-x-auto max-w-full">
+                                        <button
+                                            onClick={() => handleStatusChange(item.id, 'ok')}
+                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all shrink-0 ${formData[item.id]?.status === 'ok'
+                                                ? 'bg-white text-green-700 shadow-sm'
+                                                : 'text-muted-foreground hover:text-foreground'
+                                                }`}
+                                        >
+                                            <CheckCircle2 className="w-4 h-4" />
+                                            OK
+                                        </button>
+                                        <button
+                                            onClick={() => handleStatusChange(item.id, 'needs_replacement')}
+                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all shrink-0 ${formData[item.id]?.status === 'needs_replacement'
+                                                ? 'bg-white text-yellow-700 shadow-sm'
+                                                : 'text-muted-foreground hover:text-foreground'
+                                                }`}
+                                        >
+                                            <AlertTriangle className="w-4 h-4" />
+                                            Desgaste
+                                        </button>
+                                        <button
+                                            onClick={() => handleStatusChange(item.id, 'missing')}
+                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all shrink-0 ${formData[item.id]?.status === 'missing'
+                                                ? 'bg-white text-red-700 shadow-sm'
+                                                : 'text-muted-foreground hover:text-foreground'
+                                                }`}
+                                        >
+                                            <XCircle className="w-4 h-4" />
+                                            Falta
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row gap-4 items-start bg-muted/20 p-3 rounded-lg border border-dashed">
+                                    {/* Photo Preview & Control - Square Prominent */}
+                                    <div className="shrink-0 self-center sm:self-start">
                                         {uploading === item.id ? (
-                                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                                <Loader2 className="w-3 h-3 animate-spin" />
-                                                Subiendo...
+                                            <div className="flex flex-col items-center justify-center gap-2 w-24 h-24 border-2 border-dashed rounded-md bg-muted/50 text-xs text-muted-foreground">
+                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                                Subiendo
                                             </div>
                                         ) : formData[item.id]?.photo_url ? (
-                                            <div className="relative group">
+                                            <div className="relative group w-24 h-24">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
                                                     src={formData[item.id].photo_url}
                                                     alt="Evidence"
-                                                    className="w-12 h-12 rounded object-cover border"
+                                                    className="w-full h-full rounded-md object-cover border-2 border-primary/20 shadow-sm"
                                                 />
                                                 <Button
                                                     size="icon"
                                                     variant="destructive"
-                                                    className="w-5 h-5 absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                    className="w-6 h-6 absolute -top-2 -right-2 rounded-full shadow-md"
                                                     onClick={() => setFormData(prev => ({
                                                         ...prev,
                                                         [item.id]: { ...prev[item.id], photo_url: undefined }
                                                     }))}
                                                 >
-                                                    <XCircle className="w-3 h-3" />
+                                                    <XCircle className="w-4 h-4" />
                                                 </Button>
                                             </div>
                                         ) : (
@@ -245,47 +289,29 @@ function InspectionFormContent() {
                                                 />
                                                 <label
                                                     htmlFor={`file-${item.id}`}
-                                                    className="flex items-center gap-1 text-xs text-blue-600 cursor-pointer hover:underline"
+                                                    className={`flex flex-col items-center justify-center gap-2 w-24 h-24 border-2 border-dashed rounded-md cursor-pointer transition-colors ${formData[item.id]?.status !== 'ok' ? 'border-amber-400 bg-amber-50 text-amber-700 hover:bg-amber-100' : 'border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground'}`}
                                                 >
-                                                    <Camera className="w-3 h-3" />
-                                                    {formData[item.id]?.status !== 'ok' ? 'Evidencia requerida' : 'Agregar foto'}
+                                                    <Camera className="w-6 h-6" />
+                                                    <span className="text-[10px] text-center px-1 font-medium leading-tight">
+                                                        {formData[item.id]?.status !== 'ok' ? 'Foto Requerida' : 'Tomar Foto'}
+                                                    </span>
                                                 </label>
                                             </div>
                                         )}
                                     </div>
-                                </div>
 
-                                <div className="flex bg-muted p-1 rounded-lg self-start sm:self-auto">
-                                    <button
-                                        onClick={() => handleStatusChange(item.id, 'ok')}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${formData[item.id]?.status === 'ok'
-                                            ? 'bg-white text-green-700 shadow-sm'
-                                            : 'text-muted-foreground hover:text-foreground'
-                                            }`}
-                                    >
-                                        <CheckCircle2 className="w-4 h-4" />
-                                        OK
-                                    </button>
-                                    <button
-                                        onClick={() => handleStatusChange(item.id, 'needs_replacement')}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${formData[item.id]?.status === 'needs_replacement'
-                                            ? 'bg-white text-yellow-700 shadow-sm'
-                                            : 'text-muted-foreground hover:text-foreground'
-                                            }`}
-                                    >
-                                        <AlertTriangle className="w-4 h-4" />
-                                        Desgaste
-                                    </button>
-                                    <button
-                                        onClick={() => handleStatusChange(item.id, 'missing')}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${formData[item.id]?.status === 'missing'
-                                            ? 'bg-white text-red-700 shadow-sm'
-                                            : 'text-muted-foreground hover:text-foreground'
-                                            }`}
-                                    >
-                                        <XCircle className="w-4 h-4" />
-                                        Falta
-                                    </button>
+                                    {/* Observation Textarea */}
+                                    <div className="flex-1 w-full flex flex-col gap-1">
+                                        <label className="text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
+                                            Observaciones <span className="text-[10px] font-normal lowercase">(Opcional)</span>
+                                        </label>
+                                        <textarea
+                                            placeholder="Detalla cómo se encuentra el equipo, si nota alguna rotura, desgaste, marca, etc."
+                                            value={formData[item.id]?.observation || ""}
+                                            onChange={(e) => handleObservationChange(item.id, e.target.value)}
+                                            className="w-full h-24 sm:h-[88px] text-sm p-3 rounded-md border border-input bg-background/50 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:bg-background transition-colors placeholder:text-muted-foreground/60 shadow-sm"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         ))}
