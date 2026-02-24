@@ -189,10 +189,10 @@ function InspectionFormContent() {
                 </Button>
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight shadow-black/10 drop-shadow-sm">
-                        {inspectionId ? "Completar Auditoría" : "Nuevo reporte"}
+                        {inspectionId ? "Completar Reporte" : "Nuevo reporte"}
                     </h1>
                     <p className="text-sm text-white/90 font-medium">
-                        {inspectionId ? "Solicitada por Supervisor" : "Revisión de Equipos"}
+                        {inspectionId ? "Solicitado por tu líder" : "Revisión de Equipos"}
                     </p>
                 </div>
             </div>
