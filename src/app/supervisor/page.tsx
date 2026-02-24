@@ -24,6 +24,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Image from "next/image"
 
 import { Header } from "@/components/layout/Header"
 import KPIDashboard from "@/components/features/supervisor/KPIDashboard"
@@ -134,11 +135,15 @@ export default function SupervisorPage() {
                 title="Panel de gestión"
                 subtitle="Monitorización de reportes y EPPs del equipo."
                 icon={
-                    <img
-                        src="/tecnico.png"
-                        alt="Supervisor"
-                        className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
-                    />
+                    <div className="w-16 h-16 sm:w-24 sm:h-24 shrink-0 mr-2 relative">
+                        <Image
+                            src="/tecnico.png"
+                            alt="Supervisor"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
                 }
             />
 

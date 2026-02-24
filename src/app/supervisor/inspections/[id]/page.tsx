@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, CheckCircle2, AlertTriangle, XCircle, Calendar, User, FileOutput } from "lucide-react"
 import { Header } from "@/components/layout/Header"
+import Image from "next/image"
 
 export default function InspectionDetailPage() {
     const router = useRouter()
@@ -63,11 +64,15 @@ export default function InspectionDetailPage() {
                 title="Detalle de Reporte"
                 subtitle="Verificación de EPP"
                 icon={
-                    <img
-                        src="/tecnico.png"
-                        alt="Supervisor"
-                        className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
-                    />
+                    <div className="w-16 h-16 sm:w-24 sm:h-24 shrink-0 mr-2 relative">
+                        <Image
+                            src="/tecnico.png"
+                            alt="Supervisor"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
                 }
             />
 

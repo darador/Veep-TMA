@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { PlusCircle, ClipboardList, Clock, AlertCircle } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import Image from "next/image"
 
 import { Header } from "@/components/layout/Header"
 
@@ -75,11 +76,15 @@ export default function TechnicianPage() {
                 title={userName ? `Hola, ${userName}` : "Cargando..."}
                 subtitle="Gestiona tus revisiones de EPP"
                 icon={
-                    <img
-                        src="/tecnico.png"
-                        alt="Técnico"
-                        className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
-                    />
+                    <div className="w-16 h-16 sm:w-24 sm:h-24 shrink-0 mr-2 relative">
+                        <Image
+                            src="/tecnico.png"
+                            alt="Técnico"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
                 }
             />
 
