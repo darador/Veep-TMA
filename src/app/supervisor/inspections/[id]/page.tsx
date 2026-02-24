@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, CheckCircle2, AlertTriangle, XCircle, Calendar, User, FileOutput } from "lucide-react"
+import { Header } from "@/components/layout/Header"
 
 export default function InspectionDetailPage() {
     const router = useRouter()
@@ -57,98 +58,110 @@ export default function InspectionDetailPage() {
     if (!inspection) return <div className="p-8 text-center text-red-500">Inspección no encontrada.</div>
 
     return (
-        <div className="p-6 max-w-5xl mx-auto space-y-8 pb-20">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-4 w-full sm:w-auto">
-                    <Link href="/supervisor" className="print:hidden">
-                        <Button variant="ghost" size="icon">
-                            <ArrowLeft className="w-5 h-5" />
-                        </Button>
-                    </Link>
-                    <div>
-                        <h1 className="text-2xl font-bold tracking-tight">Detalle de Reporte - Verificación de EPP</h1>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                            <Badge variant="outline" className="font-normal gap-1">
-                                <User className="w-3 h-3" />
-                                {inspection.technician?.full_name}
-                            </Badge>
-                            <Badge variant="outline" className="font-normal gap-1">
-                                <Calendar className="w-3 h-3" />
-                                {new Date(inspection.created_at).toLocaleString()}
-                            </Badge>
-                        </div>
-                    </div>
-                </div>
+        <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+            <Header
+                title="Detalle de Reporte"
+                subtitle="Verificación de EPP"
+            >
                 <Button
                     variant="outline"
-                    className="gap-2 shrink-0 print:hidden w-full sm:w-auto"
+                    size="sm"
+                    className="gap-2 shrink-0 print:hidden text-white border-white bg-transparent hover:bg-white hover:text-movistar transition-colors"
                     onClick={() => window.print()}
                 >
                     <FileOutput className="w-4 h-4" />
                     Generar PDF
                 </Button>
-            </div>
+            </Header>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {inspection.items?.map((item: any) => (
-                    <Card key={item.id} className={`overflow-hidden ${item.status !== 'ok' ? 'border-amber-200 dark:border-amber-900 bg-amber-50/50 dark:bg-amber-900/10' : ''
-                        }`}>
-                        <CardHeader className="p-4 pb-2">
-                            <div className="flex justify-between items-start">
+            <main className="container max-w-5xl mx-auto p-6 space-y-8 pb-20">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-xl border shadow-sm print:shadow-none print:border-none print:p-0">
+                    <div className="flex items-center gap-4 w-full sm:w-auto">
+                        <Link href="/supervisor" className="print:hidden">
+                            <Button variant="outline" size="icon">
+                                <ArrowLeft className="w-5 h-5" />
+                            </Button>
+                        </Link>
+                        <div>
+                            <h2 className="text-xl font-bold">Reporte de {inspection.technician?.full_name}</h2>
+                            <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground mt-1">
+                                <Badge variant="secondary" className="font-normal gap-1">
+                                    <User className="w-3 h-3" />
+                                    {inspection.technician?.full_name}
+                                </Badge>
+                                <Badge variant="secondary" className="font-normal gap-1">
+                                    <Calendar className="w-3 h-3" />
+                                    {new Date(inspection.created_at).toLocaleString()}
+                                </Badge>
+                                <Badge variant="outline" className={`font-medium ${inspection.status === 'completed' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-yellow-50 text-yellow-700 border-yellow-200'}`}>
+                                    {inspection.status === 'completed' ? 'Completado' : 'Pendiente'}
+                                </Badge>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {inspection.items?.map((item: any) => (
+                        <Card key={item.id} className={`overflow-hidden ${item.status !== 'ok' ? 'border-amber-200 dark:border-amber-900 bg-amber-50/50 dark:bg-amber-900/10' : ''
+                            }`}>
+                            <CardHeader className="p-4 pb-2">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <CardTitle className="text-base font-medium mt-1">
+                                            {item.epp?.name}
+                                        </CardTitle>
+                                    </div>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="p-4 pt-2 space-y-3">
+                                {/* Status Badge */}
                                 <div>
-                                    <CardTitle className="text-base font-medium mt-1">
-                                        {item.epp?.name}
-                                    </CardTitle>
+                                    {item.status === 'ok' && (
+                                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1">
+                                            <CheckCircle2 className="w-3 h-3" /> OK
+                                        </Badge>
+                                    )}
+                                    {item.status === 'needs_replacement' && (
+                                        <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200 gap-1">
+                                            <AlertTriangle className="w-3 h-3" /> Desgaste / Reemplazar
+                                        </Badge>
+                                    )}
+                                    {item.status === 'missing' && (
+                                        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 gap-1">
+                                            <XCircle className="w-3 h-3" /> Faltante
+                                        </Badge>
+                                    )}
                                 </div>
-                            </div>
-                        </CardHeader>
-                        <CardContent className="p-4 pt-2 space-y-3">
-                            {/* Status Badge */}
-                            <div>
-                                {item.status === 'ok' && (
-                                    <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1">
-                                        <CheckCircle2 className="w-3 h-3" /> OK
-                                    </Badge>
-                                )}
-                                {item.status === 'needs_replacement' && (
-                                    <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200 gap-1">
-                                        <AlertTriangle className="w-3 h-3" /> Desgaste / Reemplazar
-                                    </Badge>
-                                )}
-                                {item.status === 'missing' && (
-                                    <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 gap-1">
-                                        <XCircle className="w-3 h-3" /> Faltante
-                                    </Badge>
-                                )}
-                            </div>
 
-                            {/* Photo Evidence */}
-                            {item.photo_url ? (
-                                <div className="rounded-lg overflow-hidden border bg-black/5 relative group aspect-video">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={item.photo_url}
-                                        alt="Evidencia"
-                                        className="w-full h-full object-cover transition-transform hover:scale-105"
-                                    />
-                                    <a
-                                        href={item.photo_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                                    >
-                                        Ver completa
-                                    </a>
-                                </div>
-                            ) : (
-                                <div className="h-24 bg-muted/10 border-2 border-dashed rounded-lg flex items-center justify-center text-xs text-muted-foreground">
-                                    Sin foto
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
-                ))}
-            </div>
-        </div>
+                                {/* Photo Evidence */}
+                                {item.photo_url ? (
+                                    <div className="rounded-lg overflow-hidden border bg-black/5 relative group aspect-video">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={item.photo_url}
+                                            alt="Evidencia"
+                                            className="w-full h-full object-cover transition-transform hover:scale-105"
+                                        />
+                                        <a
+                                            href={item.photo_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                        >
+                                            Ver completa
+                                        </a>
+                                    </div>
+                                ) : (
+                                    <div className="h-24 bg-muted/10 border-2 border-dashed rounded-lg flex items-center justify-center text-xs text-muted-foreground">
+                                        Sin foto
+                                    </div>
+                                )}
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </main>
+        </div >
     )
 }
