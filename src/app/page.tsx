@@ -57,8 +57,7 @@ export default function LoginPage() {
       {/* Left Column: Branding & Future 3D Asset */}
       <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16 text-white relative overflow-hidden">
 
-        {/* Decorative subtle background elements */}
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none"></div>
+        {/* Decorative subtle background elements removed to perfectly match image bg */}
 
         <div className="flex flex-col items-center text-center z-10 w-full max-w-lg mt-10 lg:mt-0">
           <h2 className="text-3xl lg:text-4xl font-semibold opacity-95 mb-8 drop-shadow-md">

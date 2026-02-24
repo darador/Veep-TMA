@@ -22,7 +22,7 @@ module.exports = {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				movistar: {
-					DEFAULT: '#53B3F1', // The bright blue exact match
+					DEFAULT: '#30ADFF', // The bright blue exact match
 					green: '#5BC500',   // The success green
 				},
 				primary: {

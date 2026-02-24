@@ -183,7 +183,7 @@ function InspectionFormContent() {
 
     return (
         <div className="p-4 sm:p-6 max-w-2xl mx-auto space-y-6 pb-24">
-            <div className="flex items-center gap-4 bg-movistar text-white p-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 rounded-b-3xl shadow-md mb-4 bg-cover bg-center" style={{ backgroundImage: "url('/comprometidos.png')", backgroundBlendMode: 'soft-light' }}>
+            <div className="flex items-center gap-4 bg-movistar text-white p-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 rounded-b-3xl shadow-md mb-4 bg-cover bg-center" style={{ backgroundImage: "url('/comprometidos.png')" }}>
                 <Button variant="ghost" onClick={() => router.back()} className="text-white hover:bg-white/20 hover:text-white rounded-full w-10 h-10 p-0">
                     <ArrowLeft className="w-5 h-5" />
                 </Button>
