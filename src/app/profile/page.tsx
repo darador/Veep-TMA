@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Header } from "@/components/layout/Header"
-import { User, Camera, Loader2, Lock, Save, CheckCircle2 } from "lucide-react"
+import { User, Camera, Loader2, Lock, Save, CheckCircle2, ArrowLeft } from "lucide-react"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export default function ProfilePage() {
     const supabase = createClient()
@@ -20,6 +21,7 @@ export default function ProfilePage() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [updatingPassword, setUpdatingPassword] = useState(false)
+    const router = useRouter()
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -113,10 +115,21 @@ export default function ProfilePage() {
                     <img
                         src="/tecnico.png"
                         alt="Técnico"
+                        width={96}
+                        height={96}
                         className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
                     />
                 }
-            />
+            >
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => router.back()}
+                    className="text-white border-white bg-transparent hover:bg-white hover:text-movistar transition-colors w-9 h-9 sm:w-10 sm:h-10 shrink-0"
+                >
+                    <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                </Button>
+            </Header>
 
             <main className="container max-w-2xl mx-auto p-6 space-y-6">
 
