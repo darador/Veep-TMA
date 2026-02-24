@@ -80,7 +80,7 @@ export default function LoginPage() {
 
         <div className="w-full max-w-md mx-auto space-y-8">
           <div className="space-y-2 text-center lg:text-left">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Bienvenido/a</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Bienvenido</h2>
             <p className="text-slate-500">Ingresa tus credenciales para continuar</p>
           </div>
 
@@ -137,7 +137,7 @@ export default function LoginPage() {
             </CardContent>
             <CardFooter className="flex flex-col space-y-4 text-center mt-8 p-0">
               <p className="text-sm tracking-wide text-slate-500 font-medium underline decoration-slate-300 underline-offset-4 cursor-pointer hover:text-movistar transition-colors">
-                ¿Olvidaste tu contraseña? Contacta al administrador
+                ¿Olvidaste tu contraseña? Contactá a tu líder
               </p>
 
               {/* Security Warning Badge */}
