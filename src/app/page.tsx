@@ -54,90 +54,110 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 p-4">
-      <div className="w-full max-w-md space-y-8">
-        {/* Logo / Branding Section */}
-        <div className="flex flex-col items-center text-center space-y-4">
-          <div className="flex items-center justify-center p-6 bg-white dark:bg-zinc-900 rounded-3xl shadow-sm border border-border/50">
-            <MovistarLogo className="h-20 w-20 text-primary fill-primary" />
+    <div className="min-h-screen flex flex-col lg:flex-row bg-movistar">
+      {/* Left Column: Branding & Future 3D Asset */}
+      <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16 text-white relative overflow-hidden">
+
+        {/* Decorative subtle background elements */}
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none"></div>
+
+        <div className="flex flex-col items-center text-center z-10 w-full max-w-lg">
+          {/* Logo white version */}
+          <div className="mb-8">
+            <div className="bg-white rounded-full p-4 shadow-lg inline-block">
+              <MovistarLogo className="h-16 w-16 text-movistar fill-movistar" />
+            </div>
           </div>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight text-primary">
-              SyH Movistar
-            </h1>
-            <p className="text-sm text-muted-foreground mt-2">
-              Sistema de Gestión de EPP
+
+          <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-sm">
+            SyH <span className="font-light">Movistar</span>
+          </h1>
+          <h2 className="text-xl lg:text-2xl font-medium opacity-90 mb-10">
+            Sistema de Gestión de EPP
+          </h2>
+
+          {/* Placeholder for 3D Character */}
+          <div className="w-full aspect-video md:aspect-square max-w-sm rounded-[2rem] border-4 border-dashed border-white/30 bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center p-6 shadow-inner transition-all hover:bg-white/10">
+            <span className="text-5xl mb-4">👷‍♀️</span>
+            <p className="text-white/80 font-medium text-center text-sm md:text-base">
+              [Espacio reservado para personaje 3D "Comprometidos con la Seguridad"]
             </p>
           </div>
         </div>
+      </div>
 
-        {/* Login Card */}
-        <Card className="border-border shadow-lg">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl">Iniciar sesión</CardTitle>
-            <CardDescription>
-              Ingresa tus credenciales para acceder al sistema
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {error && (
-              <div className="mb-4 p-2 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm rounded">
-                {error}
-              </div>
-            )}
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Correo electrónico
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="usuario@movistar.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-background"
-                />
-              </div>
-              <div className="space-y-2">
-                <label
-                  htmlFor="password"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Contraseña
-                </label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="bg-background"
-                />
-              </div>
-              <Button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                disabled={loading}
-              >
-                {loading ? "Iniciando..." : "Ingresar"}
-              </Button>
-            </form>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-2 text-center text-sm text-muted-foreground">
-            <p>
-              ¿Olvidaste tu contraseña? Contacta al administrador.
-            </p>
-          </CardFooter>
-        </Card>
+      {/* Right Column: Login Form */}
+      <div className="w-full lg:w-[500px] xl:w-[600px] bg-white flex flex-col justify-center p-8 md:p-12 lg:p-16 shadow-2xl relative z-20">
 
-        {/* Security Warning Badge */}
-        <div className="flex items-center justify-center gap-2 text-xs text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-amber-950/30 p-2 rounded-md border border-amber-200 dark:border-amber-900">
-          <span>⚠ Uso exclusivo para personal autorizado</span>
+        <div className="w-full max-w-md mx-auto space-y-8">
+          <div className="space-y-2 text-center lg:text-left">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Bienvenido/a</h2>
+            <p className="text-slate-500">Ingresa tus credenciales para continuar</p>
+          </div>
+
+          <Card className="border-none shadow-none bg-transparent">
+            <CardContent className="p-0">
+              {error && (
+                <div className="mb-6 p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100 font-medium flex items-center justify-center">
+                  {error}
+                </div>
+              )}
+              <form onSubmit={handleLogin} className="space-y-5">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-semibold text-slate-700"
+                  >
+                    Correo electrónico
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="usuario@movistar.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="h-12 bg-slate-50 border-slate-200 text-base focus-visible:ring-movistar text-slate-900"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label
+                      htmlFor="password"
+                      className="text-sm font-semibold text-slate-700"
+                    >
+                      Contraseña
+                    </label>
+                  </div>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="h-12 bg-slate-50 border-slate-200 text-base focus-visible:ring-movistar text-slate-900"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full h-12 bg-movistar hover:bg-movistar/90 text-white font-bold text-lg rounded-xl shadow-md transition-all hover:shadow-lg mt-4"
+                  disabled={loading}
+                >
+                  {loading ? "Iniciando sesión..." : "Ingresar al sistema"}
+                </Button>
+              </form>
+            </CardContent>
+            <CardFooter className="flex flex-col space-y-4 text-center mt-8 p-0">
+              <p className="text-sm tracking-wide text-slate-500 font-medium underline decoration-slate-300 underline-offset-4 cursor-pointer hover:text-movistar transition-colors">
+                ¿Olvidaste tu contraseña? Contacta al administrador
+              </p>
+
+              {/* Security Warning Badge */}
+              <div className="w-full flex items-center justify-center gap-2 text-xs font-semibold text-amber-700 bg-amber-50 p-3 rounded-lg border border-amber-200 mt-4">
+                <span>⚠ Uso exclusivo para personal autorizado de Movistar</span>
+              </div>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </div>
