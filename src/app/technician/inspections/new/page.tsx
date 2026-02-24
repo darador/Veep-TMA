@@ -212,10 +212,10 @@ function InspectionFormContent() {
                                         <span className="font-semibold text-zinc-800 dark:text-zinc-200 text-lg">{item.name}</span>
                                     </div>
 
-                                    <div className="flex w-full sm:w-auto gap-2 self-start sm:self-auto overflow-x-auto pb-2 sm:pb-0 snap-x">
+                                    <div className="flex w-full sm:w-auto gap-2 self-start sm:self-auto flex-wrap">
                                         <button
                                             onClick={() => handleStatusChange(item.id, 'ok')}
-                                            className={`flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none snap-center ${formData[item.id]?.status === 'ok'
+                                            className={`flex justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none ${formData[item.id]?.status === 'ok'
                                                 ? 'bg-movistar-green text-white shadow-md scale-[1.02] ring-2 ring-movistar-green/20'
                                                 : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
                                                 }`}
@@ -225,7 +225,7 @@ function InspectionFormContent() {
                                         </button>
                                         <button
                                             onClick={() => handleStatusChange(item.id, 'needs_replacement')}
-                                            className={`flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none snap-center ${formData[item.id]?.status === 'needs_replacement'
+                                            className={`flex justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none ${formData[item.id]?.status === 'needs_replacement'
                                                 ? 'bg-amber-500 text-white shadow-md scale-[1.02] ring-2 ring-amber-500/20'
                                                 : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
                                                 }`}
@@ -235,7 +235,7 @@ function InspectionFormContent() {
                                         </button>
                                         <button
                                             onClick={() => handleStatusChange(item.id, 'missing')}
-                                            className={`flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none snap-center ${formData[item.id]?.status === 'missing'
+                                            className={`flex justify-center items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shrink-0 flex-1 sm:flex-none ${formData[item.id]?.status === 'missing'
                                                 ? 'bg-red-500 text-white shadow-md scale-[1.02] ring-2 ring-red-500/20'
                                                 : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700'
                                                 }`}
