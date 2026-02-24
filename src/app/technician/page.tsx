@@ -97,27 +97,7 @@ export default function TechnicianPage() {
                     </div>
                 )}
 
-                <div className="grid gap-6 md:grid-cols-2">
-                    <Card className="bg-gradient-to-br from-blue-50 to-white dark:from-blue-950/20 dark:to-background border-blue-100 dark:border-blue-900">
-                        <CardHeader className="pb-2">
-                            <CardTitle className="text-lg font-medium flex items-center gap-2">
-                                <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                                Estado Actual
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
-                                {loading ? "..." : (pendingAudits.length > 0 ? "⚠️ Acción Requerida" : "Al día")}
-                            </div>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                {inspections.length > 0
-                                    ? `Última revisión: ${new Date(inspections[0].created_at).toLocaleDateString()}`
-                                    : "No has realizado inspecciones aún"
-                                }
-                            </p>
-                        </CardContent>
-                    </Card>
-
+                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
                     <Card>
                         <CardHeader className="pb-2">
                             <CardTitle className="text-lg font-medium">Total verificaciones</CardTitle>
