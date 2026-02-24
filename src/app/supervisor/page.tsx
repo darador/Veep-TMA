@@ -148,7 +148,7 @@ export default function SupervisorPage() {
                             Solicitar Reporte
                         </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="w-[95vw] max-w-lg rounded-xl">
                         <DialogHeader>
                             <DialogTitle>Solicitar Auditoría de EPP</DialogTitle>
                             <DialogDescription>
@@ -256,8 +256,8 @@ export default function SupervisorPage() {
                                         No hay reportes registrados o que coincidan con la búsqueda.
                                     </div>
                                 ) : (
-                                    <div className="rounded-md border">
-                                        <table className="w-full text-sm text-left">
+                                    <div className="rounded-md border overflow-x-auto">
+                                        <table className="w-full text-sm text-left whitespace-nowrap">
                                             <thead className="bg-muted/50 text-muted-foreground font-medium">
                                                 <tr>
                                                     <th className="p-4">Técnico</th>
