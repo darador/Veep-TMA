@@ -34,6 +34,7 @@ export default function InspectionDetailPage() {
                         id,
                         status,
                         photo_url,
+                        notes,
                         epp:epp_catalog (
                             name,
                             category,
