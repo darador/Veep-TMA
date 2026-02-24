@@ -64,7 +64,7 @@ export default function TechnicianPage() {
                 title={userName ? `Hola, ${userName}` : "Cargando..."}
                 subtitle="Gestiona tus revisiones de EPP"
                 icon={
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 relative mr-2 translate-y-2">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 relative mr-2 translate-y-4 sm:translate-y-6">
                         <img
                             src="/tecnico.png"
                             alt="Técnico"
