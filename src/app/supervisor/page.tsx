@@ -140,45 +140,7 @@ export default function SupervisorPage() {
                         className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
                     />
                 }
-            >
-                <Dialog open={isRequestOpen} onOpenChange={setIsRequestOpen}>
-                    <DialogTrigger asChild>
-                        <Button className="gap-2 bg-primary hover:bg-primary/90 text-white shadow-md">
-                            <PlusCircle className="w-4 h-4" />
-                            Solicitar Reporte
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="w-[95vw] max-w-lg rounded-xl">
-                        <DialogHeader>
-                            <DialogTitle>Solicitar Auditoría de EPP</DialogTitle>
-                            <DialogDescription>
-                                Selecciona un técnico para requerirle una revisión de sus equipos.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="py-4">
-                            <label className="text-sm font-medium mb-2 block">Técnico</label>
-                            <Select onValueChange={setSelectedTech} value={selectedTech}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Seleccionar técnico..." />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {technicians.map((tech) => (
-                                        <SelectItem key={tech.id} value={tech.id}>
-                                            {tech.full_name || tech.email}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <DialogFooter>
-                            <Button variant="outline" onClick={() => setIsRequestOpen(false)}>Cancelar</Button>
-                            <Button onClick={handleRequestAudit} disabled={!selectedTech || requesting}>
-                                {requesting ? "Enviando..." : "Enviar Solicitud"}
-                            </Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
-            </Header>
+            />
 
             <main className="container max-w-6xl mx-auto p-6 space-y-8">
 
@@ -197,38 +159,75 @@ export default function SupervisorPage() {
                     </div>
 
                     <TabsContent value="list" className="space-y-8">
-                        <div className="grid gap-6 md:grid-cols-3">
-                            <Card>
+                        <div className="grid gap-6 md:grid-cols-2">
+                            <Card className="bg-gradient-to-br from-blue-50 to-white dark:from-blue-950/20 dark:to-zinc-950 border-blue-100 dark:border-blue-900 shadow-sm">
                                 <CardHeader className="pb-2">
-                                    <CardTitle className="text-sm font-medium text-muted-foreground">Reportes Totales</CardTitle>
+                                    <CardTitle className="text-xl font-semibold text-blue-900 dark:text-blue-100">
+                                        ¿Querés solicitar un nuevo reporte a algún técnico?
+                                    </CardTitle>
+                                    <CardDescription className="text-blue-700/80 dark:text-blue-300">
+                                        Requerí proactivamente la revisión del estado de los elementos de protección personal a tu equipo.
+                                    </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">{inspections.length}</div>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardHeader className="pb-2">
-                                    <CardTitle className="text-sm font-medium text-muted-foreground">Pendientes de Revisión</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    {/* Count pending audits */}
-                                    <div className="text-2xl font-bold text-yellow-600">
-                                        {inspections.filter(i => i.status === 'pending').length}
-                                    </div>
-                                    <p className="text-xs text-muted-foreground">En curso</p>
+                                    <Dialog open={isRequestOpen} onOpenChange={setIsRequestOpen}>
+                                        <DialogTrigger asChild>
+                                            <Button className="gap-2 w-full sm:w-auto shadow-md bg-primary hover:bg-primary/90 text-white mt-2">
+                                                <PlusCircle className="w-4 h-4" />
+                                                Solicitar Reporte
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="w-[95vw] max-w-lg rounded-xl">
+                                            <DialogHeader>
+                                                <DialogTitle>Solicitar Auditoría de EPP</DialogTitle>
+                                                <DialogDescription>
+                                                    Selecciona un técnico para requerirle una revisión de sus equipos.
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <div className="py-4">
+                                                <label className="text-sm font-medium mb-2 block">Técnico</label>
+                                                <Select onValueChange={setSelectedTech} value={selectedTech}>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Seleccionar técnico..." />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {technicians.map((tech) => (
+                                                            <SelectItem key={tech.id} value={tech.id}>
+                                                                {tech.full_name || tech.email}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                            <DialogFooter>
+                                                <Button variant="outline" onClick={() => setIsRequestOpen(false)}>Cancelar</Button>
+                                                <Button onClick={handleRequestAudit} disabled={!selectedTech || requesting}>
+                                                    {requesting ? "Enviando..." : "Enviar Solicitud"}
+                                                </Button>
+                                            </DialogFooter>
+                                        </DialogContent>
+                                    </Dialog>
                                 </CardContent>
                             </Card>
                         </div>
 
                         <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <ClipboardCheck className="w-5 h-5" />
-                                    Historial reportes
-                                </CardTitle>
-                                <CardDescription>
-                                    Listado de todos los reportes recibidos.
-                                </CardDescription>
+                            <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                <div>
+                                    <CardTitle className="flex items-center gap-2 text-xl">
+                                        <ClipboardCheck className="w-5 h-5" />
+                                        Historial reportes
+                                        <span className="ml-2 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                                            {inspections.length} total
+                                        </span>
+                                        <span className="ml-1 px-2.5 py-0.5 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 text-sm font-medium">
+                                            {inspections.filter(i => i.status === 'pending').length} pendientes
+                                        </span>
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Listado de todos los reportes recibidos.
+                                    </CardDescription>
+                                </div>
                             </CardHeader>
                             <CardContent>
                                 <div className="flex flex-col sm:flex-row gap-4 mb-6">
