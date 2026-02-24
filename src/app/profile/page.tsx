@@ -109,6 +109,13 @@ export default function ProfilePage() {
             <Header
                 title="Mi Perfil"
                 subtitle="Gestiona tus datos personales y seguridad."
+                icon={
+                    <img
+                        src="/tecnico.png"
+                        alt="Técnico"
+                        className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
+                    />
+                }
             />
 
             <main className="container max-w-2xl mx-auto p-6 space-y-6">
@@ -117,7 +124,6 @@ export default function ProfilePage() {
                 <Card>
                     <CardHeader>
                         <CardTitle>Información Personal</CardTitle>
-                        <CardDescription>Tu identidad en la plataforma.</CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-col sm:flex-row items-center gap-6">
                         <div className="relative group">
@@ -155,7 +161,7 @@ export default function ProfilePage() {
                             <p className="text-muted-foreground">{profile?.email}</p>
                             <div className="flex items-center gap-2 justify-center sm:justify-start pt-2">
                                 <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 capitalize">
-                                    {profile?.role || "Rol desconocido"}
+                                    {profile?.role === 'technician' ? 'Técnico' : profile?.role === 'supervisor' ? 'Supervisor' : profile?.role === 'admin' ? 'Administrador' : "Rol desconocido"}
                                 </span>
                             </div>
                         </div>
