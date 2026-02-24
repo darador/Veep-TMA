@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, CheckCircle2, AlertTriangle, XCircle, Calendar, User } from "lucide-react"
+import { ArrowLeft, CheckCircle2, AlertTriangle, XCircle, Calendar, User, FileOutput } from "lucide-react"
 
 export default function InspectionDetailPage() {
     const router = useRouter()
@@ -58,25 +58,35 @@ export default function InspectionDetailPage() {
 
     return (
         <div className="p-6 max-w-5xl mx-auto space-y-8 pb-20">
-            <div className="flex items-center gap-4">
-                <Link href="/supervisor">
-                    <Button variant="ghost" size="icon">
-                        <ArrowLeft className="w-5 h-5" />
-                    </Button>
-                </Link>
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Detalle de Inspección</h1>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                        <Badge variant="outline" className="font-normal gap-1">
-                            <User className="w-3 h-3" />
-                            {inspection.technician?.full_name}
-                        </Badge>
-                        <Badge variant="outline" className="font-normal gap-1">
-                            <Calendar className="w-3 h-3" />
-                            {new Date(inspection.created_at).toLocaleString()}
-                        </Badge>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <Link href="/supervisor" className="print:hidden">
+                        <Button variant="ghost" size="icon">
+                            <ArrowLeft className="w-5 h-5" />
+                        </Button>
+                    </Link>
+                    <div>
+                        <h1 className="text-2xl font-bold tracking-tight">Detalle de Reporte - Verificación de EPP</h1>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                            <Badge variant="outline" className="font-normal gap-1">
+                                <User className="w-3 h-3" />
+                                {inspection.technician?.full_name}
+                            </Badge>
+                            <Badge variant="outline" className="font-normal gap-1">
+                                <Calendar className="w-3 h-3" />
+                                {new Date(inspection.created_at).toLocaleString()}
+                            </Badge>
+                        </div>
                     </div>
                 </div>
+                <Button
+                    variant="outline"
+                    className="gap-2 shrink-0 print:hidden w-full sm:w-auto"
+                    onClick={() => window.print()}
+                >
+                    <FileOutput className="w-4 h-4" />
+                    Generar PDF
+                </Button>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -86,16 +96,10 @@ export default function InspectionDetailPage() {
                         <CardHeader className="p-4 pb-2">
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
-                                        {item.epp?.category}
-                                    </div>
                                     <CardTitle className="text-base font-medium mt-1">
                                         {item.epp?.name}
                                     </CardTitle>
                                 </div>
-                                {item.epp?.is_critical && (
-                                    <Badge variant="destructive" className="text-[10px]">CRÍTICO</Badge>
-                                )}
                             </div>
                         </CardHeader>
                         <CardContent className="p-4 pt-2 space-y-3">
