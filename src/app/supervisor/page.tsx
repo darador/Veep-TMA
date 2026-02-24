@@ -5,7 +5,8 @@ import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ClipboardCheck, Eye, User, PlusCircle, BarChart3, ListChecks } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { ClipboardCheck, Eye, User, PlusCircle, BarChart3, ListChecks, Search } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -38,6 +39,10 @@ export default function SupervisorPage() {
     const [isRequestOpen, setIsRequestOpen] = useState(false)
     const [selectedTech, setSelectedTech] = useState("")
     const [requesting, setRequesting] = useState(false)
+
+    // Filter State
+    const [searchQuery, setSearchQuery] = useState("")
+    const [dateFilter, setDateFilter] = useState("")
 
     useEffect(() => {
         const fetchData = async () => {
@@ -112,17 +117,35 @@ export default function SupervisorPage() {
         setRequesting(false)
     }
 
+    const filteredInspections = inspections.filter(insp => {
+        const matchesSearch = !searchQuery ||
+            insp.technician?.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            insp.technician?.email?.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesDate = dateFilter
+            ? insp.created_at.startsWith(dateFilter)
+            : true;
+
+        return matchesSearch && matchesDate;
+    })
+
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
             <Header
-                title="Panel de Supervisión"
-                subtitle="Monitorización de auditorías y EPPs del equipo."
+                title="Panel de gestión"
+                subtitle="Monitorización de reportes y EPPs del equipo."
+                icon={
+                    <img
+                        src="/tecnico.png"
+                        alt="Supervisor"
+                        className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
+                    />
+                }
             >
                 <Dialog open={isRequestOpen} onOpenChange={setIsRequestOpen}>
                     <DialogTrigger asChild>
                         <Button className="gap-2 bg-primary hover:bg-primary/90 text-white shadow-md">
                             <PlusCircle className="w-4 h-4" />
-                            Solicitar Auditoría
+                            Solicitar Reporte
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
@@ -164,7 +187,7 @@ export default function SupervisorPage() {
                         <TabsList>
                             <TabsTrigger value="list" className="gap-2">
                                 <ListChecks className="w-4 h-4" />
-                                Inspecciones
+                                Reportes
                             </TabsTrigger>
                             <TabsTrigger value="metrics" className="gap-2">
                                 <BarChart3 className="w-4 h-4" />
@@ -177,7 +200,7 @@ export default function SupervisorPage() {
                         <div className="grid gap-6 md:grid-cols-3">
                             <Card>
                                 <CardHeader className="pb-2">
-                                    <CardTitle className="text-sm font-medium text-muted-foreground">Inspecciones Totales</CardTitle>
+                                    <CardTitle className="text-sm font-medium text-muted-foreground">Reportes Totales</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-bold">{inspections.length}</div>
@@ -201,18 +224,36 @@ export default function SupervisorPage() {
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <ClipboardCheck className="w-5 h-5" />
-                                    Auditorías Recientes
+                                    Historial reportes
                                 </CardTitle>
                                 <CardDescription>
-                                    Listado de todas las inspecciones recibidas.
+                                    Listado de todos los reportes recibidos.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
+                                <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                                    <div className="relative flex-1">
+                                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                        <Input
+                                            placeholder="Buscar por nombre o email de técnico..."
+                                            className="pl-8"
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="w-full sm:w-auto">
+                                        <Input
+                                            type="date"
+                                            value={dateFilter}
+                                            onChange={(e) => setDateFilter(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
                                 {loading ? (
                                     <div className="text-center py-4">Cargando datos...</div>
-                                ) : inspections.length === 0 ? (
+                                ) : filteredInspections.length === 0 ? (
                                     <div className="text-center py-8 text-muted-foreground">
-                                        No hay inspecciones registradas.
+                                        No hay reportes registrados o que coincidan con la búsqueda.
                                     </div>
                                 ) : (
                                     <div className="rounded-md border">
@@ -227,7 +268,7 @@ export default function SupervisorPage() {
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y">
-                                                {inspections.map((insp) => (
+                                                {filteredInspections.map((insp) => (
                                                     <tr key={insp.id} className="hover:bg-muted/20 transition-colors">
                                                         <td className="p-4 font-medium">
                                                             <div className="flex items-center gap-2">
