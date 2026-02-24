@@ -134,7 +134,7 @@ export default function TechnicianPage() {
                                     <div key={insp.id} className="flex justify-between items-center p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                                         <div>
                                             <div className="font-medium">
-                                                {insp.type === 'audit' ? 'Auditoría Supervisada' : 'Auto-Inspección'}
+                                                {insp.type === 'audit' ? 'Reporte registrado' : 'Auto-Inspección'}
                                             </div>
                                             <div className="text-sm text-muted-foreground">
                                                 {new Date(insp.created_at).toLocaleDateString()} - {new Date(insp.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
