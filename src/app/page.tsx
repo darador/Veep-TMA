@@ -70,7 +70,7 @@ export default function LoginPage() {
             <img
               src="/comprometidos.png"
               alt="Comprometidos con la Seguridad"
-              className="w-full h-auto object-contain drop-shadow-2xl"
+              className="w-full h-auto object-contain"
             />
           </div>
         </div>
