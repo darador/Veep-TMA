@@ -171,7 +171,7 @@ export default function SupervisorPage() {
                                         ¿Querés solicitar un nuevo reporte a algún técnico?
                                     </CardTitle>
                                     <CardDescription className="text-blue-700/80 dark:text-blue-300">
-                                        Requerí proactivamente la revisión del estado de los elementos de protección personal a tu equipo.
+                                        Requerí la revisión del estado de los elementos de protección personal a tu equipo.
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
