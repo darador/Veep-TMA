@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { toast } from "sonner"
 
 export default function SetupPage() {
     const [email, setEmail] = useState("")
@@ -59,11 +60,13 @@ export default function SetupPage() {
                 }
             } else {
                 setStatus(`User created successfully with role: ${role}!`)
+                toast.success(`Usuario creado: ${email}`)
             }
 
         } catch (err: any) {
             console.error(err)
             setStatus(`Error: ${err.message}`)
+            toast.error(err.message)
         } finally {
             setLoading(false)
         }
@@ -86,9 +89,11 @@ export default function SetupPage() {
 
             if (error) throw error
             setStatus("Catálogo EPP sembrado con éxito (" + epps.length + " ítems).")
+            toast.success("Catálogo sembrado con éxito")
         } catch (err: any) {
             console.error(err)
             setStatus(`Error seeding catalog: ${err.message}`)
+            toast.error(err.message)
         } finally {
             setLoading(false)
         }

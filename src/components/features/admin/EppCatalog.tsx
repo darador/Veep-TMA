@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Trash2, AlertTriangle, CheckCircle2, Archive, ArchiveRestore } from "lucide-react"
+import { toast } from "sonner"
 
 type EppItem = {
     id: string
@@ -65,6 +66,9 @@ export function EppCatalog() {
             setNewCategory("General")
             setIsCritical(false)
             fetchItems()
+            toast.success("Elemento agregado al catálogo")
+        } else {
+            toast.error("Error al agregar elemento")
         }
     }
 
@@ -76,9 +80,10 @@ export function EppCatalog() {
 
         if (!error) {
             fetchItems()
+            toast.success(item.is_active ? "Elemento archivado" : "Elemento restaurado")
         } else {
             console.error("Error updating EPP status:", error)
-            alert("Error actualizando estado del ítem.")
+            toast.error("Error actualizando estado del ítem.")
         }
     }
 
@@ -92,12 +97,13 @@ export function EppCatalog() {
 
         if (!error) {
             fetchItems()
+            toast.success("Elemento eliminado permanentemente")
         } else {
             console.error("Error deleting EPP:", error)
             if (error.code === '23503') { // foreign_key_violation
-                alert("No se puede eliminar este ítem porque está siendo usado en inspecciones históricas.\n\nPor favor usa el botón de 'Archivar' para ocultarlo sin perder el historial.")
+                toast.error("No se puede eliminar porque está en uso. Archívalo en su lugar.")
             } else {
-                alert(`Error al eliminar: ${error.message}`)
+                toast.error(`Error al eliminar: ${error.message}`)
             }
         }
     }

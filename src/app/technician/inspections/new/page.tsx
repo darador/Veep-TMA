@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { CheckCircle2, AlertTriangle, XCircle, ArrowLeft, Camera, Image as ImageIcon, Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 type EppItem = {
     id: string
@@ -92,7 +93,7 @@ function InspectionFormContent() {
 
         } catch (error) {
             console.error("Error uploading image:", error)
-            alert("Error al subir la imagen. Intenta nuevamente.")
+            toast.error("Error al subir la imagen. Intenta nuevamente.")
         } finally {
             setUploading(null)
         }
@@ -151,11 +152,12 @@ function InspectionFormContent() {
 
             if (itemsError) throw itemsError
 
+            toast.success("¡Inspección enviada correctamente!")
             router.push('/technician')
 
         } catch (error) {
             console.error("Error submitting inspection:", error)
-            alert("Error al enviar la inspección. Intenta nuevamente.")
+            toast.error("Error al enviar la inspección. Intenta nuevamente.")
         } finally {
             setSubmitting(false)
         }

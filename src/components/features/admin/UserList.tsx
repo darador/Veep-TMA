@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog"
 import { Trash2, UserCog, User, Pencil, AlertTriangle, KeyRound } from "lucide-react"
 import { resetUserPassword } from "@/app/actions/admin"
+import { toast } from "sonner"
 
 type UserItem = {
     id: string
@@ -83,9 +84,10 @@ export function UserList() {
             setEmail("")
             setFullName("")
             fetchUsers()
+            toast.success("Usuario creado exitosamente")
         } else {
             console.error("Error creating user:", error)
-            alert("Error creando usuario (Revisar consola. ¿Duplicate email?)")
+            toast.error("Error al crear usuario. ¿El email ya existe?")
         }
     }
 
@@ -110,8 +112,9 @@ export function UserList() {
             setIsEditOpen(false)
             setEditingUser(null)
             fetchUsers()
+            toast.success("Usuario actualizado correctamente")
         } else {
-            alert("Error actualizando usuario")
+            toast.error("Error al actualizar usuario")
             console.error(error)
         }
     }
@@ -131,8 +134,9 @@ export function UserList() {
         if (!error) {
             setDeletingId(null)
             fetchUsers()
+            toast.success("Usuario eliminado")
         } else {
-            alert("Error eliminando usuario")
+            toast.error("Error al eliminar usuario")
             console.error(error)
         }
     }
@@ -146,18 +150,18 @@ export function UserList() {
     const handleResetPassword = async () => {
         if (!resetUser || !newPassword) return
         if (newPassword.length < 6) {
-            alert("La contraseña debe tener al menos 6 caracteres")
+            toast.warning("La contraseña debe tener al menos 6 caracteres")
             return
         }
 
         try {
             await resetUserPassword(resetUser.id, newPassword)
-            alert("Contraseña actualizada correctamente")
+            toast.success("Contraseña actualizada correctamente")
             setIsResetOpen(false)
             setResetUser(null)
         } catch (error: any) {
             console.error(error)
-            alert("Error: " + error.message)
+            toast.error("Error: " + error.message)
         }
     }
 

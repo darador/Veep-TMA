@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Herramienta de gestión de Equipos de Protección Personal",
 };
 
+import { Toaster } from "@/components/ui/sonner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,6 +24,7 @@ export default function RootLayout({
         inter.className
       )}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

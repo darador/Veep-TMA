@@ -26,6 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Header } from "@/components/layout/Header"
 import KPIDashboard from "@/components/features/supervisor/KPIDashboard"
+import { toast } from "sonner"
 
 export default function SupervisorPage() {
     const supabase = createClient()
@@ -89,7 +90,7 @@ export default function SupervisorPage() {
             })
 
         if (!error) {
-            alert("Solicitud enviada correctamente")
+            toast.success("Solicitud enviada correctamente")
             setIsRequestOpen(false)
             setSelectedTech("")
             // Refresh list
@@ -106,7 +107,7 @@ export default function SupervisorPage() {
             if (data) setInspections(data)
         } else {
             console.error(error)
-            alert("Error al solicitar auditoría")
+            toast.error("Error al solicitar auditoría")
         }
         setRequesting(false)
     }

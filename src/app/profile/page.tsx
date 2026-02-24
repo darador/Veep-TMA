@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Header } from "@/components/layout/Header"
 import { User, Camera, Loader2, Lock, Save, CheckCircle2 } from "lucide-react"
+import { toast } from "sonner"
 
 export default function ProfilePage() {
     const supabase = createClient()
@@ -68,11 +69,11 @@ export default function ProfilePage() {
             if (updateError) throw updateError
 
             setProfile((prev: any) => ({ ...prev, avatar_url: publicUrl }))
-            alert("Foto de perfil actualizada correctamente")
+            toast.success("Foto de perfil actualizada correctamente")
 
         } catch (error) {
             console.error("Error uploading avatar:", error)
-            alert("Error al subir la foto.")
+            toast.error("Error al subir la foto.")
         } finally {
             setUploading(false)
         }
@@ -80,11 +81,11 @@ export default function ProfilePage() {
 
     const handlePasswordChange = async () => {
         if (password !== confirmPassword) {
-            alert("Las contraseñas no coinciden")
+            toast.warning("Las contraseñas no coinciden")
             return
         }
         if (password.length < 6) {
-            alert("La contraseña debe tener al menos 6 caracteres")
+            toast.warning("La contraseña debe tener al menos 6 caracteres")
             return
         }
 
@@ -92,9 +93,9 @@ export default function ProfilePage() {
         const { error } = await supabase.auth.updateUser({ password: password })
 
         if (error) {
-            alert(`Error: ${error.message}`)
+            toast.error(`Error: ${error.message}`)
         } else {
-            alert("Contraseña actualizada correctamente")
+            toast.success("Contraseña actualizada correctamente")
             setPassword("")
             setConfirmPassword("")
         }
