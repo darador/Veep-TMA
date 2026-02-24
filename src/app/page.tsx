@@ -53,7 +53,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-movistar">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-[#30ADFF]">
       {/* Left Column: Branding & Future 3D Asset */}
       <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16 text-white relative overflow-hidden">
 
@@ -132,7 +132,7 @@ export default function LoginPage() {
                   className="w-full h-12 bg-movistar hover:bg-movistar/90 text-white font-bold text-lg rounded-xl shadow-md transition-all hover:shadow-lg mt-4"
                   disabled={loading}
                 >
-                  {loading ? "Iniciando sesión..." : "Ingresar al sistema"}
+                  {loading ? "Iniciando sesión..." : "Ingresar"}
                 </Button>
               </form>
             </CardContent>
@@ -149,6 +149,6 @@ export default function LoginPage() {
           </Card>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
