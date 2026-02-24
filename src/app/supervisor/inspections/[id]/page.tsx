@@ -62,17 +62,14 @@ export default function InspectionDetailPage() {
             <Header
                 title="Detalle de Reporte"
                 subtitle="Verificación de EPP"
-            >
-                <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-2 shrink-0 print:hidden text-white border-white bg-transparent hover:bg-white hover:text-movistar transition-colors"
-                    onClick={() => window.print()}
-                >
-                    <FileOutput className="w-4 h-4" />
-                    Generar PDF
-                </Button>
-            </Header>
+                icon={
+                    <img
+                        src="/tecnico.png"
+                        alt="Supervisor"
+                        className="w-16 h-16 sm:w-24 sm:h-24 object-contain shrink-0 mr-2"
+                    />
+                }
+            />
 
             <main className="container max-w-5xl mx-auto p-6 space-y-8 pb-20">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-xl border shadow-sm print:shadow-none print:border-none print:p-0">
@@ -99,6 +96,15 @@ export default function InspectionDetailPage() {
                             </div>
                         </div>
                     </div>
+
+                    <Button
+                        variant="outline"
+                        className="gap-2 shrink-0 print:hidden w-full sm:w-auto"
+                        onClick={() => window.print()}
+                    >
+                        <FileOutput className="w-4 h-4" />
+                        Generar PDF
+                    </Button>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
