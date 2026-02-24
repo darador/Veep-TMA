@@ -63,12 +63,13 @@ export default function TechnicianPage() {
             <Header
                 title={userName ? `Hola, ${userName}` : "Cargando..."}
                 subtitle="Gestiona tus revisiones de EPP"
+                icon={<img src="/tecnico.png" alt="Técnico" className="w-12 h-12 object-contain" />}
             >
                 <Link href="/technician/inspections/new">
                     <Button className="gap-2 shadow-lg bg-primary hover:bg-primary/90 text-white">
                         <PlusCircle className="w-4 h-4" />
-                        <span className="hidden sm:inline">Nueva Inspección</span>
-                        <span className="sm:hidden">Nueva</span>
+                        <span className="hidden sm:inline">Agregar Reporte</span>
+                        <span className="sm:hidden">Agregar</span>
                     </Button>
                 </Link>
             </Header>
@@ -100,7 +101,7 @@ export default function TechnicianPage() {
                 <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
                     <Card>
                         <CardHeader className="pb-2">
-                            <CardTitle className="text-lg font-medium">Total verificaciones</CardTitle>
+                            <CardTitle className="text-lg font-medium">Total reportes</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{loading ? "..." : inspections.length}</div>
